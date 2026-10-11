@@ -1,0 +1,456 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Head Injury × EMS 2569</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: calm clinical board — summary strip, then outcome trends, EMS KPI gap, care pathway, actions. Soft slate ground, one teal accent, semantic status colors kept separate. */
+:root{
+  --bg:#EEF2F3; --surface:#FFFFFF; --surface-2:#F5F8F8; --line:#DCE4E6;
+  --ink:#1C2A31; --muted:#5D6F77; --faint:#8A9AA1;
+  --accent:#23757B; --accent-soft:#DCEDEE;
+  --good:#2F8556; --good-soft:#E1F1E7;
+  --warn:#B97A12; --warn-soft:#F8EDD6;
+  --crit:#B9443B; --crit-soft:#F7E2DF;
+  --near:#4C7FB0; --near-soft:#E2ECF6;
+  --track:#E6ECEE;
+  --f-display:"Anuphan","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11181B; --surface:#182226; --surface-2:#1D292E; --line:#2A383E;
+  --ink:#E3ECEE; --muted:#9DB0B7; --faint:#71858C;
+  --accent:#5FB8BD; --accent-soft:#1F3639;
+  --good:#5DBB86; --good-soft:#1D3328;
+  --warn:#E0A84A; --warn-soft:#3A2F1A;
+  --crit:#E57B70; --crit-soft:#3D2422;
+  --near:#7FAEDB; --near-soft:#1F2D3B;
+  --track:#26343A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11181B; --surface:#182226; --surface-2:#1D292E; --line:#2A383E;
+  --ink:#E3ECEE; --muted:#9DB0B7; --faint:#71858C;
+  --accent:#5FB8BD; --accent-soft:#1F3639;
+  --good:#5DBB86; --good-soft:#1D3328;
+  --warn:#E0A84A; --warn-soft:#3A2F1A;
+  --crit:#E57B70; --crit-soft:#3D2422;
+  --near:#7FAEDB; --near-soft:#1F2D3B;
+  --track:#26343A; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:grid;gap:22px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:700}
+h2{font-size:1.15rem;font-weight:600}
+h3{font-size:1rem;font-weight:600}
+p{margin:0}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+
+/* header */
+header.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+header.top .lead{max-width:62ch;display:grid;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:.8rem;padding:4px 11px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+nav.jump{display:flex;gap:6px;flex-wrap:wrap;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);padding-block:8px;margin-inline:-4px;padding-inline:4px}
+nav.jump a{font-size:.84rem;color:var(--muted);text-decoration:none;padding:5px 12px;border-radius:999px;border:1px solid transparent}
+nav.jump a:hover,nav.jump a:focus-visible{color:var(--accent);border-color:var(--line);background:var(--surface);outline:none}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.grid{display:grid;gap:22px}
+.g-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:980px){.g-4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-3{grid-template-columns:1fr}}
+@media (max-width:720px){.g-2{grid-template-columns:1fr}}
+@media (max-width:480px){.g-4{grid-template-columns:1fr}.wrap{padding-inline:16px}}
+
+/* KPI tiles */
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:6px;align-content:start;position:relative;overflow:hidden}
+.tile .label{font-size:.88rem;color:var(--muted)}
+.tile .big{font-size:2.2rem;font-weight:600;line-height:1.1;font-family:var(--f-num)}
+.tile .big small{font-size:1rem;color:var(--muted);font-weight:500}
+.tile .sub{font-size:.84rem;color:var(--muted)}
+.tile::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--stripe,var(--accent))}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;width:max-content}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-good{color:var(--good);background:var(--good-soft)}
+.s-warn{color:var(--warn);background:var(--warn-soft)}
+.s-crit{color:var(--crit);background:var(--crit-soft)}
+.s-near{color:var(--near);background:var(--near-soft)}
+
+/* charts */
+svg text{fill:var(--muted);font-family:var(--f-num);font-size:11px}
+svg .val{fill:var(--ink);font-size:12px;font-weight:600}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:3px;border-radius:2px;display:inline-block}
+.note{font-size:.84rem;color:var(--muted);background:var(--surface-2);border-radius:10px;padding:10px 12px}
+
+/* zero indicators */
+.zero-row{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;padding-block:10px;border-top:1px solid var(--line)}
+.zero-row:first-of-type{border-top:0}
+.zero-row .z{font-family:var(--f-num);font-size:1.5rem;font-weight:600;color:var(--good);grid-row:span 2}
+.dots{display:flex;gap:6px}
+.dots i{font-style:normal;font-size:.72rem;font-family:var(--f-num);padding:1px 7px;border-radius:6px;background:var(--good-soft);color:var(--good)}
+
+/* KPI bullet list */
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.82rem;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.filters button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kpis{display:grid;gap:4px}
+.kpi{display:grid;grid-template-columns:minmax(150px,230px) 1fr 132px;gap:14px;align-items:center;padding:10px 4px;border-top:1px solid var(--line)}
+.kpi:first-child{border-top:0}
+.kpi .name{display:grid;line-height:1.35}
+.kpi .name b{font-weight:500}
+.kpi .name span{font-size:.76rem;color:var(--faint)}
+.bar{position:relative;height:12px;background:var(--track);border-radius:6px}
+.bar .fill{position:absolute;inset:0 auto 0 0;border-radius:6px;background:var(--c);transition:width .6s ease}
+.bar .tgt{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink);border-radius:1px}
+.bar .tgt::after{content:attr(data-t);position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-family:var(--f-num);font-size:.68rem;color:var(--muted);white-space:nowrap}
+.kpi .res{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.kpi .res .v{font-family:var(--f-num);font-weight:600;font-size:1rem}
+.kpi .res .gap{font-family:var(--f-num);font-size:.76rem;color:var(--muted)}
+@media (max-width:640px){.kpi{grid-template-columns:1fr auto;}.kpi .bar{grid-column:1/-1;grid-row:2;margin-top:14px}}
+
+/* pathway */
+.path{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;counter-reset:step}
+.step{background:var(--surface-2);border-radius:12px;padding:12px;display:grid;gap:6px;align-content:start;position:relative}
+.step .n{font-family:var(--f-num);font-size:.74rem;color:var(--accent);font-weight:600}
+.step b{font-weight:600;font-size:.92rem;line-height:1.35}
+.step span{font-size:.8rem;color:var(--muted)}
+.tag{font-family:var(--f-num);font-size:.72rem;padding:2px 8px;border-radius:6px;background:var(--warn-soft);color:var(--warn);width:max-content}
+@media (max-width:980px){.path{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.path{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.timebar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tb{border-radius:10px;border:1px solid var(--line);padding:10px 12px;display:grid;gap:2px}
+.tb .t{font-family:var(--f-num);font-weight:600}
+.tb .a{font-size:.8rem}
+@media (max-width:640px){.timebar{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* GCS */
+.gcs{border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start;border:1px solid var(--line);border-top:4px solid var(--c)}
+.gcs .score{font-family:var(--f-num);font-size:.9rem;color:var(--c);font-weight:600}
+.gcs ul,.list{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.88rem}
+.gcs li::marker,.list li::marker{color:var(--faint)}
+
+/* fast track */
+.ft{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.ft div{background:var(--surface-2);border-radius:10px;padding:10px;display:grid;gap:2px;text-align:center}
+.ft .t{font-family:var(--f-num);font-weight:600;font-size:1.05rem;color:var(--accent)}
+.ft .l{font-size:.78rem;color:var(--muted)}
+@media (max-width:900px){.ft{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:460px){.ft{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* insights */
+.ins{display:grid;gap:6px;padding:16px;border-radius:12px;background:var(--surface-2)}
+.ins .k{font-family:var(--f-num);font-size:.76rem;color:var(--accent);font-weight:600}
+.ins p{font-size:.88rem;color:var(--muted)}
+
+/* actions */
+.phase{display:grid;gap:10px;align-content:start}
+.phase h3{display:flex;gap:8px;align-items:center}
+.phase h3 i{font-style:normal;font-family:var(--f-num);font-size:.72rem;color:var(--accent);background:var(--accent-soft);padding:1px 7px;border-radius:6px}
+.phase .link{font-size:.76rem;color:var(--faint)}
+
+.issues{display:grid;gap:10px;counter-reset:iss}
+.issue{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.issue::before{counter-increment:iss;content:counter(iss);font-family:var(--f-num);font-size:.8rem;font-weight:600;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--warn-soft);color:var(--warn)}
+.issue b{font-weight:600;font-size:.92rem;display:block}
+.issue span{font-size:.84rem;color:var(--muted)}
+
+.plan{display:grid;gap:10px}
+.plan div{display:grid;gap:2px;padding:10px 12px;border-radius:10px;border:1px solid var(--line)}
+.plan .new{border-style:dashed;border-color:var(--accent)}
+.plan b{font-weight:600;font-size:.92rem}
+.plan span{font-size:.82rem;color:var(--muted)}
+
+footer{font-size:.8rem;color:var(--faint);text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+section{scroll-margin-top:56px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="lead">
+      <span class="eyebrow">Clinical Tracer × EMS Trauma</span>
+      <h1>การดูแลผู้บาดเจ็บที่ศีรษะ ตั้งแต่จุดเกิดเหตุถึงโรงพยาบาล</h1>
+      <p class="muted">ผลลัพธ์ในโรงพยาบาลดีขึ้นชัดเจน แต่ตัวชี้วัดด้านเวลาของ EMS ปี 2569 ยังต่ำกว่าเป้าเกือบทั้งหมด ซึ่งเป็นความเสี่ยงแฝงใน Golden hour ของผู้ป่วย Severe HI</p>
+    </div>
+    <div class="chips">
+      <span class="chip">Clinical Tracer HI ปี 2567–2569</span>
+      <span class="chip">EMS KPI ปี 2569</span>
+      <span class="chip">มาตรฐาน สพฉ.</span>
+    </div>
+  </header>
+
+  <nav class="jump" aria-label="ไปยังส่วน">
+    <a href="#outcome">ผลลัพธ์</a>
+    <a href="#ems">KPI ของ EMS</a>
+    <a href="#pathway">เส้นทางผู้ป่วย</a>
+    <a href="#insight">ประเด็นสำคัญ</a>
+    <a href="#action">ข้อเสนอแนะ</a>
+  </nav>
+
+  <!-- summary -->
+  <div class="grid g-4">
+    <div class="tile" style="--stripe:var(--good)">
+      <span class="label">Severe HI เสียชีวิต ปี 69</span>
+      <span class="big">0<small>%</small></span>
+      <span class="pill s-good">ผ่านเป้า &lt;1% ครั้งแรก</span>
+      <span class="sub">ลดจาก 1.7% (67) และ 1.3% (68)</span>
+    </div>
+    <div class="tile" style="--stripe:var(--good)">
+      <span class="label">Severe HI มาโดยระบบ EMS</span>
+      <span class="big">100<small>%</small></span>
+      <span class="pill s-good">เกินเป้า 70%</span>
+      <span class="sub">2 ปีติดต่อกัน จาก 33% ในปี 67</span>
+    </div>
+    <div class="tile" style="--stripe:var(--accent)">
+      <span class="label">ผู้ป่วย Head Injury ปี 69</span>
+      <span class="big">102<small> ราย</small></span>
+      <span class="pill s-near">−39% จากปี 67</span>
+      <span class="sub">168 → 152 → 102 ราย</span>
+    </div>
+    <div class="tile" style="--stripe:var(--crit)">
+      <span class="label">KPI ของ EMS ที่ยังไม่ถึงเป้า</span>
+      <span class="big">8<small> / 10</small></span>
+      <span class="pill s-crit">4 ตัวอยู่ระดับวิกฤต</span>
+      <span class="sub">ต่ำสุด Turnout ≤2 นาที 18.6%</span>
+    </div>
+  </div>
+
+  <!-- outcomes -->
+  <section id="outcome" class="grid g-3">
+    <div class="panel">
+      <div class="panel-head"><h2>จำนวนผู้ป่วย HI</h2><span class="small muted">ราย</span></div>
+      <svg id="c-patients" viewBox="0 0 320 190" role="img" aria-label="จำนวนผู้ป่วย 168, 152, 102 ราย ปี 2567 ถึง 2569"></svg>
+      <p class="note">ลดลงสอดคล้องกับการรณรงค์ป้องกันอุบัติเหตุในชุมชน</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>อัตราเสียชีวิต Severe HI</h2><span class="small muted">%</span></div>
+      <svg id="c-mort" viewBox="0 0 320 190" role="img" aria-label="อัตราเสียชีวิต 1.7, 1.3, 0 เปอร์เซ็นต์ เป้าน้อยกว่า 1"></svg>
+      <div class="legend"><span><i class="sw" style="background:var(--accent)"></i>ผลงาน</span><span><i class="sw" style="background:var(--crit)"></i>เป้า &lt;1%</span></div>
+      <p class="note">ผู้ป่วยจำนวนน้อย อัตราจึงผันผวนได้ง่ายจากเคสเดียว</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Severe HI มาโดย EMS</h2><span class="small muted">%</span></div>
+      <svg id="c-emsuse" viewBox="0 0 320 190" role="img" aria-label="มาโดย EMS 33, 100, 100 เปอร์เซ็นต์ เป้า 70"></svg>
+      <div class="legend"><span><i class="sw" style="background:var(--accent)"></i>ผลงาน</span><span><i class="sw" style="background:var(--crit)"></i>เป้า 70%</span></div>
+      <p class="note">ปัจจัยสำเร็จ: ประชาสัมพันธ์ 1669 และเบอร์ รพ. ในชุมชน โรงเรียน และ อสม.</p>
+    </div>
+  </section>
+
+  <div class="grid g-2">
+    <div class="panel">
+      <div class="panel-head"><h2>ตัวชี้วัดความปลอดภัยในโรงพยาบาล</h2><span class="pill s-good">0% ทั้ง 3 ปี</span></div>
+      <div>
+        <div class="zero-row"><span class="z">0%</span><b>ประเมินระดับความรุนแรงผิดพลาด</b><div class="dots"><i>67</i><i>68</i><i>69</i><span class="small muted">&nbsp;เป้า &lt;1%</span></div></div>
+        <div class="zero-row"><span class="z">0%</span><b>กลับมารักษาซ้ำใน 24 ชม. ด้วยอาการรุนแรง</b><div class="dots"><i>67</i><i>68</i><i>69</i><span class="small muted">&nbsp;เป้า &lt;1%</span></div></div>
+        <div class="zero-row"><span class="z">0%</span><b>อาการทรุดลงหลัง Admit ใน 2 ชม.</b><div class="dots"><i>67</i><i>68</i><i>69</i><span class="small muted">&nbsp;เป้า &lt;1%</span></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Driver Diagram</h2><span class="small muted">เป้าหมาย: ลดการเสียชีวิต Severe HI</span></div>
+      <div class="plan">
+        <div style="border-color:var(--crit)"><b>Pre-hospital มีประสิทธิภาพ</b><span>ผู้ป่วยหนักเข้าถึง ER เร็ว · อบรม Pre-hospital, พัฒนาระบบ EMS และ Triage</span></div>
+        <div><b>เข้าถึงการรักษาอย่างรวดเร็ว</b><span>วินิจฉัยและส่งต่อเร็ว · แนวทางส่งต่อ, ระบบ Refer ไป รพ. ที่มีศักยภาพ</span></div>
+        <div><b>แนวทางดูแลผู้ป่วย HI</b><span>ประเมินซ้ำได้รวดเร็ว · ปรับ CPG, Fast track, Reassessment ที่ ER/IPD</span></div>
+        <div><b>ป้องกันการบาดเจ็บ</b><span>ประชาชนมีความรู้ · รณรงค์สวมหมวกนิรภัย</span></div>
+      </div>
+      <p class="note">ข้อมูล KPI ชี้ว่าแนว Pre-hospital (กรอบแดง) คือจุดที่ต้องลงแรงมากที่สุด</p>
+    </div>
+  </div>
+
+  <!-- EMS KPI -->
+  <section id="ems" class="panel">
+    <div class="panel-head">
+      <div style="display:grid;gap:2px"><h2>KPI ของ EMS ปี 2569 เทียบเป้าหมาย</h2><span class="small muted">เส้นดำ = เป้าหมาย · เรียงตามช่องว่างจากเป้า</span></div>
+      <div class="filters" role="group" aria-label="กรองตามสถานะ">
+        <button id="f-all" data-f="all" aria-pressed="true">ทั้งหมด</button>
+        <button id="f-crit" data-f="crit" aria-pressed="false">วิกฤต</button>
+        <button id="f-warn" data-f="warn" aria-pressed="false">ต้องเร่ง</button>
+        <button id="f-near" data-f="near" aria-pressed="false">ใกล้เป้า</button>
+        <button id="f-good" data-f="good" aria-pressed="false">ผ่าน</button>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <p class="note">เกณฑ์สถานะ: ห่างเป้า ≥30 จุด = วิกฤต · 10–30 จุด = ต้องเร่ง · &lt;10 จุด = ใกล้เป้า — ตัวชี้วัดวิกฤตทั้ง 4 ตัวเป็นตัวชี้วัดด้านเวลา</p>
+  </section>
+
+  <!-- pathway -->
+  <section id="pathway" class="panel">
+    <div class="panel-head"><h2>เส้นทางผู้ป่วย: จุดเกิดเหตุ → โรงพยาบาล</h2><span class="small muted">ป้ายสีส้ม = เป้าหมายเวลา</span></div>
+    <h3 class="muted" style="font-size:.9rem">Pre-hospital (EMS) ตามแนวทาง สพฉ.</h3>
+    <div class="path">
+      <div class="step"><span class="n">1</span><b>รับแจ้ง & คัดกรอง</b><span>Red / Yellow / Green</span></div>
+      <div class="step"><span class="n">2</span><b>เตรียมพร้อม</b><span>คน · รถ · อุปกรณ์</span><span class="tag">Turnout ≤2′</span></div>
+      <div class="step"><span class="n">3</span><b>ประเมินจุดเกิดเหตุ</b><span>c-ABCDE ใน 60 วินาทีแรก</span><span class="tag">Response ≤8′</span></div>
+      <div class="step"><span class="n">4</span><b>แพ็ก & เคลื่อนย้าย</b><span>แจ้ง รพ. ล่วงหน้า</span><span class="tag">On-scene ≤10′</span></div>
+      <div class="step"><span class="n">5</span><b>ดูแลระหว่างนำส่ง</b><span>ประเมินซ้ำทุก 5–15 นาที</span></div>
+      <div class="step"><span class="n">6</span><b>ส่งมอบด้วย MIST</b><span>Mechanism · Injury · Signs · Treatment</span><span class="tag">Total ≤30′</span></div>
+    </div>
+    <div class="timebar">
+      <div class="tb"><span class="small muted">Turnout ≤2 นาที</span><span class="t" style="color:var(--crit)">18.6%</span><span class="a muted">เป้า ≥80%</span></div>
+      <div class="tb"><span class="small muted">Response ≤8 นาที</span><span class="t" style="color:var(--crit)">33.9%</span><span class="a muted">เป้า ≥80%</span></div>
+      <div class="tb"><span class="small muted">On-scene ≤10 นาที</span><span class="t" style="color:var(--crit)">44.3%</span><span class="a muted">เป้า ≥90%</span></div>
+      <div class="tb"><span class="small muted">Total EMS ≤30 นาที</span><span class="t" style="color:var(--crit)">42%</span><span class="a muted">เป้า ≥80%</span></div>
+    </div>
+
+    <h3 class="muted" style="font-size:.9rem;margin-top:6px">In-hospital (ER): ATLS / C-spine protection แล้วจำแนกตาม GCS</h3>
+    <div class="grid g-3" style="gap:12px">
+      <div class="gcs" style="--c:var(--good)">
+        <span class="score">GCS 13–15</span><h3>Mild</h3>
+        <ul><li>Low risk: สังเกตอาการที่บ้าน พร้อมเอกสารเฝ้าระวัง</li><li>Moderate risk: นอนสังเกตอาการใน รพ.</li><li>High risk: CT scan / Consult แพทย์เฉพาะทาง</li></ul>
+      </div>
+      <div class="gcs" style="--c:var(--warn)">
+        <span class="score">GCS 9–12</span><h3>Moderate</h3>
+        <ul><li>Oxygen mask with bag, O<sub>2</sub> sat &gt;95%</li><li>IV fluid</li><li>Lab: BS, BUN/Cr, Electrolyte, DTX, PT, INR</li><li>พิจารณา Refer</li></ul>
+      </div>
+      <div class="gcs" style="--c:var(--crit)">
+        <span class="score">GCS 3–8</span><h3>Severe</h3>
+        <ul><li>On Endotracheal tube, O<sub>2</sub> sat &gt;95%</li><li>IV fluid · Hyperventilation if indicated</li><li>Refer ผ่าน TBI Fast Track ภายใน 45 นาที</li></ul>
+      </div>
+    </div>
+
+    <h3 class="muted" style="font-size:.9rem;margin-top:6px">TBI Fast Track: เป้าหมายเวลา</h3>
+    <div class="ft">
+      <div><span class="t">≤10′</span><span class="l">On-scene</span></div>
+      <div><span class="t">≤20′</span><span class="l">Door-to-CT</span></div>
+      <div><span class="t">≤20′</span><span class="l">Door-to-Lab</span></div>
+      <div><span class="t">≤20′</span><span class="l">Door-to-Refer</span></div>
+      <div><span class="t">≤30′</span><span class="l">Door-to-Blood</span></div>
+      <div><span class="t">≤45′</span><span class="l">Door-to-OR</span></div>
+      <div><span class="t">≤60′</span><span class="l">Door-to-Incision</span></div>
+    </div>
+    <p class="note">ร่วมกับ SpO<sub>2</sub> ≥95%, SBP ≥100 mmHg, DTX ≥80 mg%, Hct ≥30% · เกณฑ์ Activate: GCS ≤8, Unilateral pupil dilatation, Hemiparesis, Motor ≤4 หรือ Imaging (ASDH/MLS &gt;10 mm, EDH &gt;15 mm)</p>
+  </section>
+
+  <!-- insights -->
+  <section id="insight" class="grid g-2">
+    <div class="panel">
+      <h2>วิเคราะห์เชื่อมโยง 2 แหล่งข้อมูล</h2>
+      <div class="grid g-2" style="gap:12px">
+        <div class="ins"><span class="k">การเข้าถึง vs ความเร็ว</span><h3>เรียก EMS มากขึ้น แต่ยังไปถึงช้า</h3><p>มาโดย EMS 100% แต่ Response ≤8 นาที 33.9% และ Total ≤30 นาที 42%</p></div>
+        <div class="ins"><span class="k">คอขวด</span><h3>ฐานปฏิบัติการและจุดเกิดเหตุ</h3><p>Turnout 18.6% และ On-scene 44.3% สะท้อนความพร้อมทีม/รถ และเวลาที่จุดเกิดเหตุ</p></div>
+        <div class="ins"><span class="k">การส่งต่อข้อมูล</span><h3>ข้อมูลส่งต่อยังไม่ครบ</h3><p>Pre-notification 89%, Documentation 79%, C-spine 80% ทำให้ ER เริ่ม Fast Track ช้า</p></div>
+        <div class="ins"><span class="k">พื้นที่เสี่ยง</span><h3>ถนนสายรอง / หมู่บ้าน</h3><p>ผู้บาดเจ็บส่วนใหญ่ไม่สวมหมวกนิรภัย และพื้นที่ห่างไกลทำให้ Response time ยาว</p></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>ข้อสังเกตด้านข้อมูล</h2><span class="pill s-warn">ควรปรับให้สอดคล้อง</span></div>
+      <div class="issues">
+        <div class="issue"><div><b>เป้าการส่งต่อไม่ตรงกัน</b><span>Refer Severe HI ภายใน 45 นาที แต่ TBI Fast Track กำหนด Door-to-Refer ≤20 นาที</span></div></div>
+        <div class="issue"><div><b>เป้าอัตราเสียชีวิตต่างกัน</b><span>Process Management ระบุ HI เสียชีวิต &lt;2% แต่ตารางผลลัพธ์ใช้ Severe HI &lt;1%</span></div></div>
+        <div class="issue"><div><b>ข้อสรุป EMS ต้องปรับตามข้อมูล</b><span>"ไม่เป็นตามเป้า" ตรงเฉพาะปี 67 (33%) ปี 68–69 ได้ 100% แล้ว</span></div></div>
+        <div class="issue"><div><b>KPI ของ EMS มีเฉพาะปี 69</b><span>ไม่มีข้อมูลย้อนหลังและไม่แยกกลุ่ม HI จึงดูแนวโน้มได้จำกัด</span></div></div>
+        <div class="issue"><div><b>ยังไม่รายงานตัวชี้วัดที่ตั้งไว้</b><span>"Severe HI ส่งต่อภายใน 45 นาที" ไม่มีในตารางผลลัพธ์ 3 ปี</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- actions -->
+  <section id="action" class="panel">
+    <div class="panel-head"><h2>ข้อเสนอแนะการพัฒนา แยกตามระยะการดูแล</h2><span class="small muted">เรียงตาม EMS timeline</span></div>
+    <div class="grid g-4" style="gap:18px">
+      <div class="phase"><h3><i>1</i>เตรียมพร้อม & เดินทาง</h3><span class="link">แก้ Turnout · Response</span>
+        <ul class="list"><li>ทีมเวรพร้อมออก 24 ชม. บันทึกเวลา Turnout ทุกเคส</li><li>Checklist รถ-อุปกรณ์ทุกเวร</li><li>เครือข่าย FR / อาสากู้ชีพในหมู่บ้าน</li></ul></div>
+      <div class="phase"><h3><i>2</i>ณ จุดเกิดเหตุ</h3><span class="link">แก้ On-scene · C-spine · Triage</span>
+        <ul class="list"><li>ฝึก Scene drill แบบ Load &amp; Go ให้จบใน 10 นาที</li><li>ทบทวนทักษะ C-spine และ ITLS / PHTLS</li><li>ทบทวนเคส Under-triage รายเดือน</li></ul></div>
+      <div class="phase"><h3><i>3</i>นำส่ง & ส่งมอบ</h3><span class="link">แก้ Pre-notification · Documentation</span>
+        <ul class="list"><li>แบบฟอร์ม MIST สำเร็จรูปสำหรับแจ้งล่วงหน้า</li><li>Checklist EMS Report ก่อนส่งมอบ</li><li>เริ่ม TBI Fast Track ตั้งแต่ได้รับแจ้ง</li></ul></div>
+      <div class="phase"><h3><i>4</i>ป้องกันในชุมชน</h3><span class="link">ลดจำนวนและความรุนแรง</span>
+        <ul class="list"><li>รณรงค์หมวกนิรภัยบนถนนสายรองและหมู่บ้าน</li><li>ประชาสัมพันธ์ 1669 ในโรงเรียนและ อสม.</li><li>ใช้ข้อมูลจุดเกิดเหตุซ้ำวางแผนเชิงรุก</li></ul></div>
+    </div>
+    <h3 style="margin-top:6px">แผนพัฒนาต่อเนื่อง</h3>
+    <div class="grid g-4 plan" style="gap:10px">
+      <div><b>ส่งพยาบาลเรียนเฉพาะทางอุบัติเหตุ</b><span>เพิ่มสมรรถนะดูแลผู้บาดเจ็บรุนแรง</span></div>
+      <div><b>เตรียมรถฉุกเฉินให้ได้มาตรฐาน</b><span>ตอบโจทย์ Turnout และ Response time</span></div>
+      <div><b>อบรมการพยาบาล Pre-hospital</b><span>แก่เจ้าหน้าที่และหน่วยงานที่เกี่ยวข้อง</span></div>
+      <div class="new"><b>ติดตาม KPI ของ EMS รายเดือน แยกกลุ่ม HI</b><span>ข้อเสนอเพิ่ม: เชื่อมเวลา EMS กับผลลัพธ์ผู้ป่วย</span></div>
+    </div>
+  </section>
+
+  <footer>ที่มา: Clinical Tracer Head Injury (ปี 2567–2569) และแนวทางปฏิบัติการ EMS กรณี Trauma ตามมาตรฐาน สพฉ. · KPI ปี 2569</footer>
+</div>
+
+<script>
+(function(){
+  const NS='http://www.w3.org/2000/svg';
+  const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e}
+  const years=['2567','2568','2569'];
+
+  function frame(svg,max,ticks,fmt){
+    svg.innerHTML='';
+    const L=40,R=310,T=20,B=160,y=v=>B-(v/max)*(B-T);
+    ticks.forEach(t=>{el('line',{x1:L,x2:R,y1:y(t),y2:y(t),stroke:'var(--line)','stroke-width':1},svg);
+      const tx=el('text',{x:L-8,y:y(t)+4,'text-anchor':'end'},svg);tx.textContent=fmt(t)});
+    const xs=years.map((_,i)=>L+((R-L)/3)*(i+.5));
+    years.forEach((yr,i)=>{const t=el('text',{x:xs[i],y:B+20,'text-anchor':'middle'},svg);t.textContent=yr});
+    return {y,xs,L,R};
+  }
+  function bars(id,data,max,ticks,unit){
+    const svg=document.getElementById(id),f=frame(svg,max,ticks,v=>v);
+    data.forEach((v,i)=>{const last=i===data.length-1,w=44;
+      el('rect',{x:f.xs[i]-w/2,y:f.y(v),width:w,height:f.y(0)-f.y(v),rx:6,fill:last?'var(--accent)':'var(--accent-soft)'},svg);
+      const t=el('text',{x:f.xs[i],y:f.y(v)-7,'text-anchor':'middle',class:'val'},svg);t.textContent=v+unit});
+  }
+  function line(id,data,max,ticks,target,unit,area){
+    const svg=document.getElementById(id),f=frame(svg,max,ticks,v=>v);
+    const pts=data.map((v,i)=>[f.xs[i],f.y(v)]);
+    if(area){el('path',{d:'M'+pts[0][0]+','+f.y(0)+' L'+pts.map(p=>p.join(',')).join(' L')+' L'+pts[pts.length-1][0]+','+f.y(0)+'Z',fill:'var(--accent-soft)',opacity:.8},svg)}
+    el('line',{x1:f.L,x2:f.R,y1:f.y(target),y2:f.y(target),stroke:'var(--crit)','stroke-width':1.5,'stroke-dasharray':'5 4'},svg);
+    el('polyline',{points:pts.map(p=>p.join(',')).join(' '),fill:'none',stroke:'var(--accent)','stroke-width':2.5,'stroke-linejoin':'round'},svg);
+    pts.forEach((p,i)=>{const last=i===pts.length-1;
+      el('circle',{cx:p[0],cy:p[1],r:last?6:4,fill:last?'var(--accent)':'var(--surface)',stroke:'var(--accent)','stroke-width':2},svg);
+      const above=p[1]>40;const t=el('text',{x:p[0],y:above?p[1]-12:p[1]+20,'text-anchor':'middle',class:'val'},svg);t.textContent=data[i]+unit});
+  }
+  bars('c-patients',[168,152,102],200,[0,50,100,150,200],'');
+  line('c-mort',[1.7,1.3,0],2,[0,0.5,1,1.5,2],1,'%',true);
+  line('c-emsuse',[33,100,100],100,[0,25,50,75,100],70,'%',true);
+
+  const K=[
+    ['Turnout Time ≤ 2 นาที','เตรียมพร้อม/เดินทาง',18.6,80,'≥80%'],
+    ['Response Time ≤ 8 นาที','เตรียมพร้อม/เดินทาง',33.9,80,'≥80%'],
+    ['On-Scene Time ≤ 10 นาที','จุดเกิดเหตุ',44.3,90,'≥90%'],
+    ['Total EMS Time ≤ 30 นาที','นำส่ง/ส่งมอบ',42,80,'≥80%'],
+    ['C-Spine Immobilization','จุดเกิดเหตุ',80,100,'100%'],
+    ['Complete Documentation','นำส่ง/ส่งมอบ',79,95,'≥95%'],
+    ['Pre-Arrival Notification','นำส่ง/ส่งมอบ',89,100,'100%'],
+    ['Accurate Triage','จุดเกิดเหตุ',87,95,'≥95%'],
+    ['Survival Rate at ER','ผลลัพธ์/ความปลอดภัย',95,90,'≥90%'],
+  ];
+  const label={crit:'วิกฤต',warn:'ต้องเร่ง',near:'ใกล้เป้า',good:'ผ่าน'};
+  const color={crit:'var(--crit)',warn:'var(--warn)',near:'var(--near)',good:'var(--good)'};
+  const box=document.getElementById('kpis');
+  const rows=K.map(([n,ph,v,t,tl])=>{
+    const g=v-t,s=g>=0?'good':(-g>=30?'crit':(-g>=10?'warn':'near'));
+    const r=document.createElement('div');r.className='kpi';r.dataset.s=s;
+    r.innerHTML=`<div class="name"><b>${n}</b><span>${ph}</span></div>
+      <div class="bar" role="img" aria-label="${n} ${v}% เป้า ${tl}"><div class="fill" style="--c:${color[s]};width:${v}%"></div><div class="tgt" data-t="${tl}" style="left:calc(${t}% - 1px)"></div></div>
+      <div class="res"><span class="v">${v}%</span><span class="pill s-${s}">${label[s]}</span><span class="gap">${g>=0?'+':'−'}${Math.abs(g).toFixed(1)} จุด</span></div>`;
+    box.appendChild(r);return r;
+  });
+  const z=document.createElement('div');z.className='kpi';z.dataset.s='good';
+  z.innerHTML=`<div class="name"><b>Zero Scene Accident</b><span>ผลลัพธ์/ความปลอดภัย</span></div>
+    <div class="small muted">อุบัติเหตุรถพยาบาลระหว่างปฏิบัติการ · เป้า 0 ครั้ง</div>
+    <div class="res"><span class="v">0 ครั้ง</span><span class="pill s-good">ผ่าน</span><span class="gap">—</span></div>`;
+  box.appendChild(z);rows.push(z);
+
+  document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    rows.forEach(r=>r.hidden=!(b.dataset.f==='all'||r.dataset.s===b.dataset.f));
+  }));
+})();
+</script>
+
+</body></html>
